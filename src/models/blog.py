@@ -1,9 +1,7 @@
-import   uuid
-import datetime
-from src.common.database import Database
+import uuid
 from src.models.post import Post
-
-
+from src.common.database import Database
+import datetime
 
 
 class Blog(object):
@@ -14,7 +12,7 @@ class Blog(object):
         self.description = description
         self._id = uuid.uuid4().hex if _id is None else _id
 
-    def new_post(self, title, content, date=datetime.datetime.utcnow()):
+    def new_post(self,title,content,date=datetime.datetime.utcnow()):
         post = Post(blog_id=self._id,
                     title=title,
                     content=content,
@@ -39,15 +37,14 @@ class Blog(object):
         }
 
     @classmethod
-    def get_mongo(cls, id):
+    def from_mongo(cls, id):
         blog_data = Database.find_one(collection='blogs',
                                       query={'_id': id})
-        return cls(**blog_data)
-
+        return Blog(**blog_data)
 
 
     @classmethod
     def find_by_author_id(cls, author_id):
         blogs = Database.find(collection='blogs',
                               query={'author_id': author_id})
-        return [cls( **blog) for blog in blogs]
+        return [cls(**blog) for blog in blogs]
