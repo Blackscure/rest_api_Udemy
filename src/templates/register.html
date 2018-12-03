@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+    <form id="page-form" action="/auth/register" method="POST">
+         <input type="text" id="email" name="email">
+        <input type="password" id="password" name="password">
+        <input type="submit" id="submit-button">
+    </form>
+{% endblock %}
